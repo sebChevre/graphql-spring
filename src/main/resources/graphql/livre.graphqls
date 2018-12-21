@@ -1,0 +1,18 @@
+type Livre {
+    id: ID!
+    titre: String!
+    isbn: String!
+    nbrePages: Int
+    auteur: Auteur
+}
+
+extend type Query {
+    findAllLivres: [Livre]!
+    countLivres: Long!
+}
+
+extend type Mutation {
+    newLivre(titre: String!, isbn: String!, nbrePages: Int, auteur: ID!) : Livre!
+    deleteLivre(id: ID!) : Boolean
+    updateLivrePageCount(nbrePages: Int!, id: ID!) : Livre!
+}
