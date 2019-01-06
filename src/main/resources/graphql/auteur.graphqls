@@ -5,10 +5,11 @@ type Auteur {
 }
 
 type Query {
-  findAllAuteurs: [Auteur]!
+  auteur(id: ID): Auteur
+  findAllAuteurs(nom: String): [Auteur]!
   countAuteurs: Long!
 }
 
 type Mutation {
   newAuteur(prenom: String!, nom: String!) : Auteur!
-}
+} 

@@ -21,11 +21,18 @@ public class QueryResolver implements GraphQLQueryResolver {
         this.livreRepository = livreRepository;
     }
 
-    public List<Auteur> findAllAuteurs(){
+    public List<Auteur> findAllAuteurs(String nom){
 
         List<Auteur> target = new ArrayList<>();
         auteurRepository.findAll().forEach(target::add);
         return target;
+    }
+
+    public Auteur auteur(Long id){
+
+
+        return auteurRepository.findById(id).get();
+
     }
 
     public long countAuteurs(){

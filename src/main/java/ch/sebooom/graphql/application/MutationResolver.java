@@ -2,11 +2,15 @@ package ch.sebooom.graphql.application;
 
 
 import ch.sebooom.graphql.domaine.Auteur;
-import ch.sebooom.graphql.infrastructure.AuteurRepository;
+import ch.sebooom.graphql.domaine.ISBN;
 import ch.sebooom.graphql.domaine.Livre;
+import ch.sebooom.graphql.domaine.builder.LivreBuilder;
+import ch.sebooom.graphql.infrastructure.AuteurRepository;
 import ch.sebooom.graphql.infrastructure.LivreRepository;
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.math.BigDecimal;
 
 public class MutationResolver implements GraphQLMutationResolver{
 
@@ -20,20 +24,16 @@ public class MutationResolver implements GraphQLMutationResolver{
     }
 
     public Auteur newAuteur(String prenom, String nom){
-        Auteur auteur = new Auteur();
-        auteur.setNom(nom);
-        auteur.setPrenom(prenom);
+        Auteur auteur = new Auteur(prenom,nom);
 
         auteurRepository.save(auteur);
 
         return auteur;
     }
 
-    public Livre newLivre(String titre, String isbn, Integer nbrePages, Long auteurId){
-        Livre livre = new Livre();
-        livre.setAuteur(new Auteur(auteurId));
-        livre.setIsbn(isbn);
-        livre.setNbrePages(nbrePages);
+    public Livre newLivre(String titre, ISBN isbn, Integer nbrePages, Long auteurId){
+        Livre livre = new LivreBuilder().onlyBook(titre,isbn,nbrePages, 0,BigDecimal.ZERO)
+        .withAuteur(new Auteur(auteurId)).build();
 
         livreRepository.save(livre);
 
@@ -47,7 +47,7 @@ public class MutationResolver implements GraphQLMutationResolver{
 
     public Livre updateLivrePageCount(Integer pageCount, Long id) {
         Livre book = livreRepository.findById(id).get();
-        book.setNbrePages(pageCount);
+        //book.setNbrePages(pageCount);
 
         livreRepository.save(book);
 
