@@ -7,7 +7,8 @@ type Livre {
 }
 
 extend type Query {
-    findAllLivres: [Livre]!
+    livre(id: ID): Livre
+    allLivres: [Livre]!
     countLivres: Long!
 }
 

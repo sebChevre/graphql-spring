@@ -6,7 +6,7 @@ type Auteur {
 
 type Query {
   auteur(id: ID): Auteur
-  findAllAuteurs(nom: String): [Auteur]!
+  allAuteurs(nom: String): [Auteur]!
   countAuteurs: Long!
 }
 

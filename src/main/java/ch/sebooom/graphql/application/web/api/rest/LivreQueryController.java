@@ -4,8 +4,8 @@ import ch.sebooom.graphql.domaine.Livre;
 import ch.sebooom.graphql.infrastructure.AuteurRepository;
 import ch.sebooom.graphql.infrastructure.LivreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class LivreQueryController {
         this.auteurRepository = auteurRepository;
     }
 
-    @RequestMapping(value = "/livres")
+    @GetMapping(value = "/livres")
     public List<Livre> getAll(){
 
         List<Livre> livres = new ArrayList<>();
@@ -38,7 +38,7 @@ public class LivreQueryController {
 
     }
 
-    @RequestMapping(value = "/livres/{id}")
+    @GetMapping(value = "/livres/{id}")
     public Livre getById(@PathVariable("id")String id){
 
         return livreRepository.findById(Long.valueOf(id)).get();
